@@ -1,0 +1,38 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8010/eureka
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+feign:
+  circuitbreaker:
+    enabled: true
+logging:
+  level:
+    com:
+      cognizant:
+        app:
+          lms:
+            dashboard:
+              communication:
+                CoursesServiceFeignClient: DEBUG
+server:
+  port: 9091
+spring:
+  application:
+    name: lmsdashboard
+  datasource:
+    password: root
+    url: jdbc:mysql://localhost:3306/lms
+    username: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+  config:
+   import: optional:configserver:http://localhost:9095
+  
+  
+token:
+ secret: shadyaxeeshadyaxeeshadyaxeeshadyaxeeshadyaxee
+ 
+    
