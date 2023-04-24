@@ -43,7 +43,7 @@ public class DashboardUsersController {
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<UserResponseModel> getUserById(@PathVariable(name = "id")String id){
-		return usersCommunicationService.getuserById(id);
+		return usersCommunicationService.getUserById(id);
 	}
 	
 	@GetMapping("/email/{email}")
@@ -58,7 +58,7 @@ public class DashboardUsersController {
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<UserResponseModel> updateUserById(@RequestBody UserUpdateRequestModel updateUserRequest, @PathVariable(name = "id")String id){
-		return usersCommunicationService.updateuserById(updateUserRequest, id);
+		return usersCommunicationService.updateUserById(updateUserRequest, id);
 	}
 	
 
@@ -69,7 +69,7 @@ public class DashboardUsersController {
 	
 	@DeleteMapping
 	public String deleteAllUsers(){
-		usersCommunicationService.deleteAllUser();
+		usersCommunicationService.deleteAllUsers();
 		return "Deleted All Users";
 	}
 }

@@ -1,4 +1,4 @@
-package com.cognizant.app.lms.dashboard.communication.service;
+package com.cognizant.app.lms.dashboard.communication;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -10,24 +10,19 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.cognizant.app.lms.dashboard.communication.CoursesServiceFeignClient;
 import com.cognizant.app.lms.dashboard.model.CourseRequestModel;
 import com.cognizant.app.lms.dashboard.model.CourseResponseModel;
 
 @SpringBootTest
-class CoursesCommunicationServiceTest {
+class CoursesServiceFeignClientTest {
 
 	@MockBean
 	private CoursesServiceFeignClient coursesServiceFeignClient;
-	
-	@Autowired
-	private CoursesCommunicationService coursesCommunicationService;
 	
 	CourseRequestModel courseRequestModel;
 	CourseResponseModel courseResponseModel;
@@ -55,7 +50,7 @@ class CoursesCommunicationServiceTest {
 		ResponseEntity<CourseResponseModel> respEntity = ResponseEntity.status(HttpStatus.CREATED).body(courseResponseModel);
 		when(coursesServiceFeignClient.registerCourse(any())).thenReturn(respEntity);
 		
-		ResponseEntity<CourseResponseModel> receivedRespEntity= coursesCommunicationService.registerCourse(courseRequestModel);
+		ResponseEntity<CourseResponseModel> receivedRespEntity= coursesServiceFeignClient.registerCourse(courseRequestModel);
 
 		assertEquals(respEntity.getBody().getCourseId(), receivedRespEntity.getBody().getCourseId());
 		assertEquals(respEntity.getBody().getCourseName(), receivedRespEntity.getBody().getCourseName());
@@ -70,7 +65,7 @@ class CoursesCommunicationServiceTest {
 		ResponseEntity<CourseResponseModel> respEntity = ResponseEntity.status(HttpStatus.OK).body(courseResponseModel);
 		when(coursesServiceFeignClient.getCourseById(eq("9999"))).thenReturn(respEntity);
 		
-		ResponseEntity<CourseResponseModel> receivedRespEntity= coursesCommunicationService.getCourseById("9999");
+		ResponseEntity<CourseResponseModel> receivedRespEntity= coursesServiceFeignClient.getCourseById("9999");
 
 		assertEquals(respEntity.getBody().getCourseId(), receivedRespEntity.getBody().getCourseId());
 		assertEquals(respEntity.getBody().getCourseName(), receivedRespEntity.getBody().getCourseName());
@@ -89,7 +84,7 @@ class CoursesCommunicationServiceTest {
 		ResponseEntity<List<CourseResponseModel>> respEntity = ResponseEntity.status(HttpStatus.OK).body(allCoursesResponse);
 		when(coursesServiceFeignClient.getAllCourses()).thenReturn(respEntity);
 		
-		ResponseEntity<List<CourseResponseModel>> receivedRespEntity= coursesCommunicationService.getAllCourses();
+		ResponseEntity<List<CourseResponseModel>> receivedRespEntity= coursesServiceFeignClient.getAllCourses();
 
 		assertNotNull(receivedRespEntity);
 		assertEquals(2, receivedRespEntity.getBody().size());
@@ -107,7 +102,7 @@ class CoursesCommunicationServiceTest {
 		ResponseEntity<CourseResponseModel> respEntity = ResponseEntity.status(HttpStatus.ACCEPTED).body(courseResponseModel);
 		when(coursesServiceFeignClient.updateCourseById(eq(courseRequestModel), eq("9999"))).thenReturn(respEntity);
 		
-		ResponseEntity<CourseResponseModel> receivedRespEntity= coursesCommunicationService.updateCourseById(courseRequestModel, "9999");
+		ResponseEntity<CourseResponseModel> receivedRespEntity= coursesServiceFeignClient.updateCourseById(courseRequestModel, "9999");
 
 		assertEquals(respEntity.getBody().getCourseId(), receivedRespEntity.getBody().getCourseId());
 		assertEquals(respEntity.getBody().getCourseName(), receivedRespEntity.getBody().getCourseName());
@@ -127,7 +122,7 @@ class CoursesCommunicationServiceTest {
 		ResponseEntity<List<CourseResponseModel>> respEntity = ResponseEntity.status(HttpStatus.OK).body(allCoursesResponse);
 		when(coursesServiceFeignClient.getCourseInfo(eq("name"),eq("dac"))).thenReturn(respEntity);
 		
-		ResponseEntity<List<CourseResponseModel>> receivedRespEntity= coursesCommunicationService.getCoursesInfo("name", "dac");
+		ResponseEntity<List<CourseResponseModel>> receivedRespEntity= coursesServiceFeignClient.getCourseInfo("name", "dac");
 
 		assertNotNull(receivedRespEntity);
 		assertEquals(2, receivedRespEntity.getBody().size());
@@ -143,7 +138,7 @@ class CoursesCommunicationServiceTest {
 		ResponseEntity<List<CourseResponseModel>> respEntity = ResponseEntity.status(HttpStatus.OK).body(allCoursesResponse);
 		when(coursesServiceFeignClient.getCourseInfo(eq("description"),eq("technologies"))).thenReturn(respEntity);
 		
-		ResponseEntity<List<CourseResponseModel>> receivedRespEntity= coursesCommunicationService.getCoursesInfo("description", "technologies");
+		ResponseEntity<List<CourseResponseModel>> receivedRespEntity= coursesServiceFeignClient.getCourseInfo("description", "technologies");
 
 		assertNotNull(receivedRespEntity);
 		assertEquals(2, receivedRespEntity.getBody().size());
@@ -159,7 +154,7 @@ class CoursesCommunicationServiceTest {
 		ResponseEntity<List<CourseResponseModel>> respEntity = ResponseEntity.status(HttpStatus.OK).body(allCoursesResponse);
 		when(coursesServiceFeignClient.getCourseInfo(eq("duration"),eq("9999"))).thenReturn(respEntity);
 		
-		ResponseEntity<List<CourseResponseModel>> receivedRespEntity= coursesCommunicationService.getCoursesInfo("duration", "9999");
+		ResponseEntity<List<CourseResponseModel>> receivedRespEntity= coursesServiceFeignClient.getCourseInfo("duration", "9999");
 
 		assertNotNull(receivedRespEntity);
 		assertEquals(2, receivedRespEntity.getBody().size());
@@ -175,9 +170,10 @@ class CoursesCommunicationServiceTest {
 		ResponseEntity<List<CourseResponseModel>> respEntity = ResponseEntity.status(HttpStatus.OK).body(allCoursesResponse);
 		when(coursesServiceFeignClient.getCourseInfo(eq("technology"),eq("Java999"))).thenReturn(respEntity);
 		
-		ResponseEntity<List<CourseResponseModel>> receivedRespEntity= coursesCommunicationService.getCoursesInfo("technology", "Java999");
+		ResponseEntity<List<CourseResponseModel>> receivedRespEntity= coursesServiceFeignClient.getCourseInfo("technology", "Java999");
 
 		assertNotNull(receivedRespEntity);
 		assertEquals(2, receivedRespEntity.getBody().size());
 	}
+
 }

@@ -38,12 +38,12 @@ public interface UsersServiceFeignClient {
 	
 	//Update
 	@PutMapping("/user/{id}")
-	public ResponseEntity<UserResponseModel> updateuserById(@RequestBody UserUpdateRequestModel updateRequestModel,@PathVariable(name = "id")String id);
+	public ResponseEntity<UserResponseModel> updateUserById(@RequestBody UserUpdateRequestModel updateRequestModel,@PathVariable(name = "id")String id);
 	
 	//Delete
 	@DeleteMapping("/user/{id}")
 	public ResponseEntity<Map<String, UserResponseModel>> deleteUserById(@PathVariable(name = "id")String id);
 	
 	@DeleteMapping("/user")
-	public String deleteAllUser();
+	public String deleteAllUsers();
 }

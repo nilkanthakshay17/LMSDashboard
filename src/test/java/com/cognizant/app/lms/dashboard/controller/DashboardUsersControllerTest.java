@@ -118,7 +118,7 @@ class DashboardUsersControllerTest {
 		
 		ResponseEntity<UserResponseModel> respEntity = ResponseEntity.status(HttpStatus.OK).body(userResponseModel);
 		
-		when(usersCommunicationService.getuserById(eq("9999"))).thenReturn(respEntity);
+		when(usersCommunicationService.getUserById(eq("9999"))).thenReturn(respEntity);
 				
 		MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(getUserByUserIdURI)
 				.contentType(MediaType.APPLICATION_JSON))
@@ -195,7 +195,7 @@ class DashboardUsersControllerTest {
 		
 		ResponseEntity<UserResponseModel> respEntity = ResponseEntity.status(HttpStatus.ACCEPTED).body(userResponseModel);
 		
-		when(usersCommunicationService.updateuserById(any(),eq("9999"))).thenReturn(respEntity);
+		when(usersCommunicationService.updateUserById(any(),eq("9999"))).thenReturn(respEntity);
 				
 		MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.put(updateUserURI)
 				.contentType(MediaType.APPLICATION_JSON)

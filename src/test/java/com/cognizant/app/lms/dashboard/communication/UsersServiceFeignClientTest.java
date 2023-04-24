@@ -1,4 +1,4 @@
-package com.cognizant.app.lms.dashboard.communication.service;
+package com.cognizant.app.lms.dashboard.communication;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -10,25 +10,20 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.cognizant.app.lms.dashboard.communication.UsersServiceFeignClient;
 import com.cognizant.app.lms.dashboard.model.UserRequestModel;
 import com.cognizant.app.lms.dashboard.model.UserResponseModel;
 import com.cognizant.app.lms.dashboard.model.UserUpdateRequestModel;
 
 @SpringBootTest
-class UsersCommunicationServiceTest {
+class UsersServiceFeignClientTest {
 
 	@MockBean
 	UsersServiceFeignClient usersServiceFeignClient;
-	
-	@Autowired
-	UsersCommunicationService usersCommunicationService;
 	
 	UserRequestModel userRequestModel;
 	UserResponseModel userResponseModel;
@@ -63,7 +58,7 @@ class UsersCommunicationServiceTest {
 		
 		when(usersServiceFeignClient.createUser(any())).thenReturn(respEntity);
 		
-		ResponseEntity<UserResponseModel> receivedRespEntity = usersCommunicationService.registerUser(userRequestModel);
+		ResponseEntity<UserResponseModel> receivedRespEntity = usersServiceFeignClient.createUser(userRequestModel);
 		
 		assertEquals(respEntity.getBody().getUserId(), receivedRespEntity.getBody().getUserId());
 		assertEquals(respEntity.getBody().getUserName(), receivedRespEntity.getBody().getUserName());
@@ -77,7 +72,7 @@ class UsersCommunicationServiceTest {
 		
 		when(usersServiceFeignClient.getUserById(eq("9999"))).thenReturn(respEntity);
 		
-		ResponseEntity<UserResponseModel> receivedRespEntity = usersCommunicationService.getUserById("9999");
+		ResponseEntity<UserResponseModel> receivedRespEntity = usersServiceFeignClient.getUserById("9999");
 		
 		assertEquals(respEntity.getBody().getUserId(), receivedRespEntity.getBody().getUserId());
 		assertEquals(respEntity.getBody().getUserName(), receivedRespEntity.getBody().getUserName());
@@ -94,7 +89,7 @@ class UsersCommunicationServiceTest {
 		
 		when(usersServiceFeignClient.getAllUsers()).thenReturn(respEntity);
 		
-		ResponseEntity<List<UserResponseModel>> receivedRespEntity = usersCommunicationService.getAllUsers();
+		ResponseEntity<List<UserResponseModel>> receivedRespEntity = usersServiceFeignClient.getAllUsers();
 		
 		assertNotNull(receivedRespEntity);
 	}
@@ -115,7 +110,7 @@ class UsersCommunicationServiceTest {
 		
 		when(usersServiceFeignClient.updateUserById(any(), eq("9999"))).thenReturn(respEntity);
 		
-		ResponseEntity<UserResponseModel> receivedRespEntity = usersCommunicationService.updateUserById(userUpdateRequestModel, "9999");
+		ResponseEntity<UserResponseModel> receivedRespEntity = usersServiceFeignClient.updateUserById(userUpdateRequestModel, "9999");
 		
 		assertEquals(respEntity.getBody().getUserId(), receivedRespEntity.getBody().getUserId());
 		assertEquals(respEntity.getBody().getUserName(), receivedRespEntity.getBody().getUserName());
@@ -130,11 +125,12 @@ class UsersCommunicationServiceTest {
 		
 		when(usersServiceFeignClient.getUserByEmailId(eq("nilkanthakshay17@gmail.com"))).thenReturn(respEntity);
 		
-		ResponseEntity<UserResponseModel> receivedRespEntity = usersCommunicationService.getUserByEmail("nilkanthakshay17@gmail.com");
+		ResponseEntity<UserResponseModel> receivedRespEntity = usersServiceFeignClient.getUserByEmailId("nilkanthakshay17@gmail.com");
 		
 		assertEquals(respEntity.getBody().getUserId(), receivedRespEntity.getBody().getUserId());
 		assertEquals(respEntity.getBody().getUserName(), receivedRespEntity.getBody().getUserName());
 		assertEquals(respEntity.getBody().getUserEmail(), receivedRespEntity.getBody().getUserEmail());
 		assertEquals(respEntity.getBody().getRoles(), receivedRespEntity.getBody().getRoles());
 	}
+
 }

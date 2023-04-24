@@ -25,7 +25,7 @@ public class UsersCommunicationService implements UserDetailsService{
 		return usersServiceFeignClient.createUser(registerUser);
 	}
 	
-	public ResponseEntity<UserResponseModel> getuserById(String id){
+	public ResponseEntity<UserResponseModel> getUserById(String id){
 		return usersServiceFeignClient.getUserById(id);
 	}
 	
@@ -38,16 +38,16 @@ public class UsersCommunicationService implements UserDetailsService{
 	}
 	
 	
-	public ResponseEntity<UserResponseModel> updateuserById( UserUpdateRequestModel updateRequestModel, String id){
-		return usersServiceFeignClient.updateuserById(updateRequestModel, id);
+	public ResponseEntity<UserResponseModel> updateUserById( UserUpdateRequestModel updateRequestModel, String id){
+		return usersServiceFeignClient.updateUserById(updateRequestModel, id);
 	}
 	
 	public ResponseEntity<Map<String, UserResponseModel>> deleteUserById(String id){
 		return usersServiceFeignClient.deleteUserById(id);
 	}
 	
-	public String deleteAllUser() {
-		return usersServiceFeignClient.deleteAllUser();
+	public String deleteAllUsers() {
+		return usersServiceFeignClient.deleteAllUsers();
 	}
 	
 	@Override
